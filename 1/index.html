@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ajax (VanillaJS)</title>
+</head>
+<body>
+  <button id="button">Me Kliko!</button>
+  <br /> <br />
+  <div id="text"></div>
+
+    <script>
+    //Krijojme nje Event Listener
+
+    document.getElementById("button").addEventListener('click', shfaq)
+    
+    function shfaq() {
+      //Krijojme objektin XHR
+      var xhr = new XMLHttpRequest();
+      //OPEN- type, url/file, async
+      console.log(xhr);
+      xhr.open('GET', 'sample.txt', true);
+
+      console.log('READYSTATE:', xhr.readyState);
+          
+     xhr.onload = function() {
+
+    // HTTP Statuses
+    // 200: "OK"
+    // 403: "Forbidden"
+    // 404: "Not Found"
+
+    if(this.status == 200) {
+      console.log(this.responseText);
+          document.getElementById('text').innerHTML = this.responseText;
+      } else if (this.status == 404) {
+        document.getElementById('text').innerHTML = 'Not Found';
+      }
+       };
+      
+      xhr.onreadystatechange = function() {
+        console.log('READYSTATE:', xhr.readyState);
+        if(this.readyState == 4 && this.status == 200) {
+    // readyState Values
+    // 0: request not initialized 
+    // 1: server connection established
+    // 2: request received 
+    // 3: processing request 
+    // 4: request finished and response is ready
+    
+     console.log(this.responseText);
+
+        }
+      };
+
+      //OPTIONAL - USED FOR LOADERS
+        
+      xhr.onprogress = function() {
+        console.log('READYSTATE:', xhr.readyState);
+      };
+
+    xhr.onerror = function() {
+      console.log('Request Error ...');
+    };
+
+
+      xhr.send();
+     
+    };
+    </script>
+</body>
+</html>
